@@ -1,51 +1,100 @@
 {
   	"name": "vscode-plugin-weibo-hot",
-	"displayName": "vscode-plugin-weibo-hot",
-	"description": "weibo hot news",
-	"version": "0.0.1",
-	"engines": {
-		"vscode": "^1.52.0"
-	},
-	"categories": [
-		"Other"
-	],
-	"activationEvents": [
-        "onCommand:vscode-plugin-weibo-hot.helloWorld"
-	],
-	"main": "./dist/extension.js",
-	"contributes": {
+  	"displayName": "vscode-plugin-weibo-hot",
+  	"description": "weibo hot news",
+  	"version": "0.0.2",
+  	"author": "hitao1234 <hitao1234@gmail.com>",
+  	"repository": {
+  	  	"type": "git",
+  	  	"url": "https://github.com/hitao123/vscode-plugin-weibo-hot.git"
+  	},
+  	"keywords": [
+  	  	"微博热搜",
+  	  	"知乎热搜"
+  	],
+  	"publisher": "Billow",
+  	"icon": "resources/logo.png",
+  	"engines": {
+  	  	"vscode": "^1.52.0"
+  	},
+  	"categories": [
+  	  	"Other"
+  	],
+  	"activationEvents": [
+  	  	"*"
+  	],
+  	"main": "./dist/extension.js",
+  	"contributes": {
+  	  	"viewsContainers": {
+  	  	  	"activitybar": [
+  	  	  	  	{
+  	  	  	  	  	"id": "weibo-explorer",
+  	  	  	  	  	"title": "热搜",
+  	  	  	  	  	"icon": "resources/logo.png"
+  	  	  	  	}
+  	  	  	]
+  	  	},
+  	  	"views": {
+  	  	  	"weibo-explorer": [
+  	  	  	  	{
+  	  	  	  	  	"id": "weiboTreeView",
+  	  	  	  	  	"name": "微博热搜",
+  	  	  	  	  	"icon": "resources/logo.png",
+  	  	  	  	  	"contextualTitle": "热搜排行"
+  	  	  	  	}
+  	  	  	]
+		},
 		"commands": [
 			{
-				"command": "vscode-plugin-weibo-hot.helloWorld",
-				"title": "Hello World"
+				"command": "weiboTreeView.refreshWeiBo",
+				"title": "刷新",
+				"icon": {
+					"light": "resources/light/refresh.svg",
+					"dark": "resources/dark/refresh.svg"
+				}
 			}
-		]
-	},
-	"scripts": {
-		"vscode:prepublish": "yarn run package",
-		"compile": "webpack --config ./build/node-extension.webpack.config.js",
-		"watch": "webpack --watch --config ./build/node-extension.webpack.config.js",
-		"package": "webpack --mode production --devtool hidden-source-map --config ./build/node-extension.webpack.config.js",
-		"test-compile": "tsc -p ./",
-		"test-watch": "tsc -watch -p ./",
-		"pretest": "yarn run test-compile && yarn run lint",
-		"lint": "eslint src --ext ts",
-		"test": "node ./out/test/runTest.js"
-	},
-	"devDependencies": {
-		"@types/vscode": "^1.52.0",
-		"@types/glob": "^7.1.3",
-		"@types/mocha": "^8.0.4",
-		"@types/node": "^12.11.7",
-		"eslint": "^7.15.0",
-		"@typescript-eslint/eslint-plugin": "^4.9.0",
-		"@typescript-eslint/parser": "^4.9.0",
-		"glob": "^7.1.6",
-		"mocha": "^8.1.3",
-		"typescript": "^4.1.2",
-		"vscode-test": "^1.4.1",
-		"ts-loader": "^8.0.11",
-		"webpack": "^5.10.0",
-		"webpack-cli": "^4.2.0"
-	}
+		],
+		"menus": {
+			"view/title": [
+				{
+					"command": "weiboTreeView.refreshWeiBo",
+					"when": "view == weiboTreeView",
+					"group": "navigation"
+				}
+			]
+		}
+  	},
+  	"scripts": {
+  	  	"vscode:prepublish": "yarn run package",
+  	  	"compile": "webpack --config ./build/node-extension.webpack.config.js",
+  	  	"watch": "webpack --watch --config ./build/node-extension.webpack.config.js",
+  	  	"package": "webpack --mode production --devtool hidden-source-map --config ./build/node-extension.webpack.config.js",
+  	  	"test-compile": "tsc -p ./",
+  	  	"test-watch": "tsc -watch -p ./",
+  	  	"pretest": "yarn run test-compile && yarn run lint",
+  	  	"lint": "eslint src --ext ts",
+  	  	"test": "node ./out/test/runTest.js"
+  	},
+  	"devDependencies": {
+  	  	"@types/glob": "^7.1.3",
+  	  	"@types/mocha": "^8.0.4",
+  	  	"@types/node": "^12.11.7",
+  	  	"@types/vscode": "^1.52.0",
+  	  	"@typescript-eslint/eslint-plugin": "^4.9.0",
+  	  	"@typescript-eslint/parser": "^4.9.0",
+  	  	"eslint": "^7.15.0",
+  	  	"glob": "^7.1.6",
+  	  	"mocha": "^8.1.3",
+  	  	"ts-loader": "^8.0.11",
+  	  	"typescript": "^4.1.2",
+  	  	"vscode-test": "^1.4.1",
+  	  	"webpack": "^5.10.0",
+  	  	"webpack-cli": "^4.2.0"
+  	},
+  	"dependencies": {
+  	  	"@types/node-fetch": "^2.5.8",
+  	  	"axios": "^0.21.1",
+  	  	"cheerio": "^1.0.0-rc.5",
+  	  	"node-fetch": "^2.6.1"
+  	}
 }

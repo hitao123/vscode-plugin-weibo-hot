@@ -35,5 +35,10 @@ export default class WeiBoTreeItem extends TreeItem {
         this.contextValue = contextValue;
         this.label = name;
         this.tooltip = label;
+        this.command = {
+            title: name, // 标题
+            command: 'hot-news.weiboItemClick', // 命令 ID
+            arguments: []
+        };
     }
 }

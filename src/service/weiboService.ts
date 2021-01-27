@@ -12,6 +12,7 @@ export default class WeiBoService {
 
   private context: ExtensionContext;
   private weiboUrl = 'https://s.weibo.com/top/summary';
+  public feedList: Array<WeiBoTreeItem> = [];
 
   constructor(context: ExtensionContext) {
     this.context = context;
@@ -21,25 +22,33 @@ export default class WeiBoService {
    * 获取数据
    */
   async getData(): Promise<Array<WeiBoTreeItem>> {
-    const res: any = await fetch(this.weiboUrl);
 
-    const result: string = await res.text();
-    const matches = result.matchAll(regexp);
+    try { 
+      const res: any = await fetch(this.weiboUrl);
 
-    const words: Word[] = Array.from(matches).map(x => ({
-      url: x[1],
-      title: x[2],
-    }));
-
-    if (words.length) {
-      return words.map((item, index) => {
-        const fullUrl: string = 'https://s.weibo.com/' + item.url;
-        return new WeiBoTreeItem({
-          name: item.title,
-          contextValue: item.title,
-          label: fullUrl
-        }, this.context, false);
-      });
+      const result: string = await res.text();
+      const matches = result.matchAll(regexp);
+  
+      const words: Word[] = Array.from(matches).map(x => ({
+        url: x[1],
+        title: x[2],
+      }));
+  
+      if (words.length) {
+        this.feedList = words.map((item, index) => {
+          const fullUrl: string = 'https://s.weibo.com/' + item.url;
+          return new WeiBoTreeItem({
+            name: item.title,
+            contextValue: item.title,
+            label: fullUrl
+          }, this.context, false);
+        });
+  
+        return this.feedList;
+      }
+    } catch (err) {
+      console.log(err);
+      return this.feedList;
     }
 
     return Promise.resolve([]);

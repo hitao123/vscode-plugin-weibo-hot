@@ -2,7 +2,7 @@
   	"name": "vscode-plugin-weibo-hot",
   	"displayName": "vscode-plugin-weibo-hot",
   	"description": "hot news",
-  	"version": "0.0.3",
+  	"version": "0.0.4",
   	"author": "hitao1234 <hitao1234@gmail.com>",
   	"repository": {
   	  	"type": "git",

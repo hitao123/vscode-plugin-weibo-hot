@@ -3,6 +3,9 @@ import WeiBoService from './service/weiboService';
 import { WeiboProvider } from './service/weiboProvider';
 import { ZhihuProvider } from './service/zhihuProvider';
 import ZhihuService from './service/zhihuService';
+import weiboLinkPreview from './webview/weiboLinkPreview';
+import zhihuLinkPreview from './webview/zhihuLinkPreview';
+
 
 let weiboTreeView: vscode.TreeView<any> | null = null;
 let zhihuTreeView: vscode.TreeView<any> | null = null;
@@ -22,17 +25,21 @@ export function activate(context: vscode.ExtensionContext) {
 		treeDataProvider: zhihuProvider,
 	});
 
+	// 注册命令，需要在 package.json 声明
 	vscode.commands.registerCommand('hot-news.refreshWeiBo', () => {
 		weiboProvider.refresh();
 	});
-
 	vscode.commands.registerCommand('hot-news.refreshZhihu', () => {
 		zhihuProvider.refresh();
 	});
+	// 注册命令，不需要在 package.json 声明
+	vscode.commands.registerCommand('hot-news.weiboItemClick', () => weiboLinkPreview(weiBoService))
+	vscode.commands.registerCommand('hot-news.zhihuItemClick', () => zhihuLinkPreview(zhihuService))
+
 
 	console.log('🐂 Congratulations, your extension "vscode-plugin-weibo-hot" is now active!');
 
-	context.subscriptions.push(); //
+	context.subscriptions.push();
 }
 
 // this method is called when your extension is deactivated

@@ -15,28 +15,37 @@ export type TopSearch = {
 
 export default class ZhihuService {
     private context: ExtensionContext;
+    public feedList: ZhihuTreeItem[] = [];
+    private zhihuUrl = 'https://www.zhihu.com/api/v4/search/top_search';
 
     constructor(context: ExtensionContext) {
         this.context = context;
     }
 
     async getData(): Promise<Array<ZhihuTreeItem>> {
-        const response = await fetch('https://www.zhihu.com/api/v4/search/top_search');
 
-        const result: TopSearch = await response.json();
+        try {
+            const response = await fetch(this.zhihuUrl);
 
-        const words = result.top_search.words;
-
-        if (words.length) {
-            return words.map((item, index) => {
-                const url = `https://www.zhihu.com/search?q=${item.query}`;
-
-                return new ZhihuTreeItem({
-                    name: item.display_query,
-                    contextValue: item.display_query,
-                    label: url
-                }, this.context, false);
-            });
+            const result: TopSearch = await response.json();
+    
+            const words = result.top_search.words;
+    
+            if (words.length) {
+                this.feedList = words.map((item, index) => {
+                    const url = `https://www.zhihu.com/search?q=${item.query}`;
+    
+                    return new ZhihuTreeItem({
+                        name: item.display_query,
+                        contextValue: item.display_query,
+                        label: url
+                    }, this.context, false);
+                });
+    
+                return this.feedList;
+            }
+        } catch (err) {
+            return this.feedList;
         }
 
         return Promise.resolve([]);

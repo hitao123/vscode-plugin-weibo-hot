@@ -1,14 +1,14 @@
 import { Event, EventEmitter, TreeDataProvider, TreeItem } from 'vscode';
-import WeiBoService from './weiboService';
-import WeiBoTreeItem from '../shared/weiboTreeItem';
+import ZhihuService from './zhihuService';
+import ZhihuTreeItem from '../shared/zhihuTreeItem';
 
-export class WeiboProvider implements TreeDataProvider<WeiBoTreeItem> {
+export class ZhihuProvider implements TreeDataProvider<ZhihuTreeItem> {
 
-    private service: WeiBoService;
+    private service: ZhihuService;
     private _onDidChangeTreeData: EventEmitter<any> = new EventEmitter<any>();
     readonly onDidChangeTreeData: Event<any> = this._onDidChangeTreeData.event;
 
-    constructor(service: WeiBoService) {
+    constructor(service: ZhihuService) {
         this.service = service;
     }
 
@@ -16,15 +16,15 @@ export class WeiboProvider implements TreeDataProvider<WeiBoTreeItem> {
         this._onDidChangeTreeData.fire(undefined);
     }
   
-    getChildren(element: WeiBoTreeItem): Thenable<WeiBoTreeItem[]> {
+    getChildren(element: ZhihuTreeItem): Thenable<ZhihuTreeItem[]> {
         return this.service.getData();
     }
     
-    getParent(element: WeiBoTreeItem): WeiBoTreeItem | null {
+    getParent(element: ZhihuTreeItem): ZhihuTreeItem | null {
         return null;
     }
 
-    getTreeItem(element: WeiBoTreeItem): TreeItem {
+    getTreeItem(element: ZhihuTreeItem): TreeItem {
         return element;
     }
 }

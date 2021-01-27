@@ -1,4 +1,3 @@
-// import Axios from 'axios';
 import fetch from 'node-fetch';
 import { ExtensionContext } from 'vscode';
 import WeiBoTreeItem from '../shared/weiboTreeItem';
@@ -9,20 +8,6 @@ type Word = {
   url: string;
 };
 
-/** 合并两次热门话题并根据 id 去重 */
-export function mergeWords(
-  words: Word[],
-  another: Word[],
-): Word[] {
-  const obj: Record<string, string> = {};
-  for (const w of words.concat(another)) {
-    obj[w.url] = w.title;
-  }
-  return Object.entries(obj).map(([url, title]) => ({
-    url,
-    title,
-  }));
-}
 export default class WeiBoService {
 
   private context: ExtensionContext;

@@ -1,8 +1,8 @@
 {
   	"name": "vscode-plugin-weibo-hot",
   	"displayName": "vscode-plugin-weibo-hot",
-  	"description": "weibo hot news",
-  	"version": "0.0.2",
+  	"description": "hot news",
+  	"version": "0.0.3",
   	"author": "hitao1234 <hitao1234@gmail.com>",
   	"repository": {
   	  	"type": "git",
@@ -28,25 +28,35 @@
   	  	"viewsContainers": {
   	  	  	"activitybar": [
   	  	  	  	{
-  	  	  	  	  	"id": "weibo-explorer",
+  	  	  	  	  	"id": "hot-explorer",
   	  	  	  	  	"title": "热搜",
   	  	  	  	  	"icon": "resources/logo.png"
   	  	  	  	}
   	  	  	]
   	  	},
   	  	"views": {
-  	  	  	"weibo-explorer": [
+  	  	  	"hot-explorer": [
   	  	  	  	{
-  	  	  	  	  	"id": "weiboTreeView",
-  	  	  	  	  	"name": "微博热搜",
-  	  	  	  	  	"icon": "resources/logo.png",
-  	  	  	  	  	"contextualTitle": "热搜排行"
-  	  	  	  	}
+  	  	  	  	  	"id": "HotTreeView.weibo",
+  	  	  	  	  	"name": "微博热搜"
+				},
+				{
+					"id": "HotTreeView.zhihu",
+					"name": "知乎热搜"
+				}
   	  	  	]
 		},
 		"commands": [
 			{
-				"command": "weiboTreeView.refreshWeiBo",
+				"command": "hot-news.refreshWeiBo",
+				"title": "刷新",
+				"icon": {
+					"light": "resources/light/refresh.svg",
+					"dark": "resources/dark/refresh.svg"
+				}
+			},
+			{
+				"command": "hot-news.refreshZhihu",
 				"title": "刷新",
 				"icon": {
 					"light": "resources/light/refresh.svg",
@@ -57,8 +67,13 @@
 		"menus": {
 			"view/title": [
 				{
-					"command": "weiboTreeView.refreshWeiBo",
-					"when": "view == weiboTreeView",
+					"command": "hot-news.refreshWeiBo",
+					"when": "view == HotTreeView.weibo",
+					"group": "navigation"
+				},
+				{
+					"command": "hot-news.refreshZhihu",
+					"when": "view == HotTreeView.zhihu",
 					"group": "navigation"
 				}
 			]
